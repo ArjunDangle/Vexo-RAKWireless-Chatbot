@@ -1,0 +1,290 @@
+---
+title: RAK7249 WisGate Edge Max Datasheet
+description: Explore the comprehensive information about your RAK7249 to help you use it. This information includes technical specifications, characteristics, requirements, and a discussion of the device components.
+keywords:
+    - WisGate Edge Max Datasheet
+    - RAK7249 guides
+    - LoRa concentrators
+    - LoRaWAN gateway setup
+    - LoRaWAN Gateway
+    -  Outdoor Gateway
+image: https://images.docs.rakwireless.com/wisgate/rak7249/quickstart/1.main/RAK7249.png
+sidebar_label: Datasheet
+---
+
+    
+
+# RAK7249 WisGate Edge Max Datasheet
+
+## Overview
+
+### Description
+
+**RAK7249 WisGate Edge Max** is an ideal product for IoT commercial deployment. Its modularity and customization options allow for flexibility when deploying a solution. With its industrial-grade components, it achieves a high standard of reliability.
+
+The gateway provides for a solid out of the box experience for quick deployment. Additionally, since its software and UI sits on top of OpenWRT it is perfect for the development of custom applications (via the open SDK).
+
+Thus the RAK7249 is suited for any use case scenario, be it rapid deployment or customization with regards to UI and functionality.
+
+### Features
+
+#### Hardware
+
+1. **IP67/NEMA-6** industrial grade enclosure with cable glands
+2. **PoE (802.3 af)** + Surge Protection
+3. Dual LoRa Concentrators for up to **16 channels**
+4. **Backhaul:** Wi-Fi, LTE and Ethernet
+5. **GPS**
+6. Up to **5 hours of autonomous work** on battery (Battery + Solar Kit optional)
+
+#### Software
+
+1. Built-in LoRa Server
+2. OpenVPN
+3. Software and UI sit on top of **OpenWRT**
+4. LoRaWAN 1.0.3
+5. **LoRa Frame filtering** (node whitelisting)
+6. **MQTT v3.1** Bridging with **TLS** encryption
+7. **Buffering of LoRa frames** in case of NS outage (no data loss)
+
+## Specifications
+
+### Overview
+
+The overview presents the circuit board of RAK7249 WisGate Edge Max and its block diagram that shows the board works with MT7628 chip as the core. It also lists the components and accessories of the RAK7249 WisGate Edge Max.
+
+#### Circuit Board
+
+> **Image:** Circuit Board Interface
+
+#### Components and Accessories
+
+Create your own RAK7249 WisGate Edge Max using the supplied building blocks:
+
+- Main Board
+- Enclosure
+- Backup Battery
+- Accessories
+
+> **Image:** DIY Enterprise Gateway Components and Accessories
+
+:::tip NOTE
+Actual Devices for RAK7249 WisGate Edge Max and accessories may differ from the image presented. For any discrepancies, please adhere to the actual product instead.
+:::
+
+##### Main Board
+
+- **CPU:** RAK634 Module (MT7628 inside)
+- **RAM**:128MB DDR2
+- **Flash**:16MB
+- **WiFi**: 2x2 MIMO 802.11b/g/n
+- **LoRa Concentrator:** up to 2 LoRa Concentrator modules for up to 16 LoRa channels
+- **Tx Power**: up to 27dBm
+- **Rx sensitivity**: down to -139dBm.
+- **4G Cellular**: Quectel EG95 for CAT4 cellular network
+- **GPS**: L70 GPS Module
+- **Power-over-Ethernet (PoE)**: 100M base-T Ethernet with IEEE802.3af/at standard Power-over-Ethernet
+
+##### Enclosure
+
+- IP67 waterproof white color
+- **Interface**: 5 x N-Type connectors for Antenna,1 PoE port and 1 reserve port.
+- **Weight (with cable)**: approximately 70.54oz (2kg)
+- **Dimensions**: 220mm x 220mm x 104mm
+- **Wall thickness**: 2mm.
+- **Support**: up to 70~100 mm diameter pole mount
+
+##### Backup Battery
+
+- The maximum space in the Enclosure can be placed 12V/10AH batteries for about 10 hours lifetime under typical operation
+- Battery powered real time clock
+- Battery Within 140 mm x 70 mm x 30 mm
+- DC 5.5 x 2.1 circular joint with two interfaces, one male and one female
+
+##### Accessories
+
+- Mounting Kit
+- PoE Injector
+- WiFI Antenna
+- GPS Antenna
+- LoRa Antenna
+- LTE Antenna
+
+#### Block Diagram
+
+The image below shows the block diagram for RAK7249 WisGate Edge Max with MT7628 chip as the core.
+
+> **Image:** RAK7249 Block Diagram
+
+### Hardware
+
+The hardware specification presents the interfacing of RAK7249 WisGate Edge Max both in hardware and board interfaces.
+
+#### Interfaces
+
+##### Hardware Interface
+
+The images below shows the hardware interfaces at the front and rear of RAK7249 WisGate Edge Max.
+
+> **Image:** Hardware Interfaces - Front
+
+> **Image:** Hardware Interfaces - Rear
+
+##### Board Interface
+
+> **Image:** Circuit Board Interface
+
+###### Reset Key Functions
+
+The RAK7249 WisGate Edge Max's mainboard provides a Reset key and 6 x LEDs for status indication. The function of the Reset key is as follows:
+
+- **Short press**: Restarts the Gateway
+- **Long press (5s and above)**: Restore Factory Settings;
+
+###### LED Indicators
+
+The status of the LEDs is described as below. Please refer to the printing of the LEDs on the mainboard.
+
+| LEDs                            | Status Indication Description                                                                                                                                                                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **LED1 (PWR)**                  | Power Indicator, Led ON when device power on                                                                                                                                                                                                                   |
+| **LED2 (ETH)**                  | • **ON** - linkup 
+ • **OFF** - linkdown 
+ • **Flash** - Data Transmitting and Receiving                                                                                                                                                                 |
+| **LED3 (LoRa1)**                | • **ON** - LoRa1 is working 
+ • **OFF** - LoRa1 is not working 
+ • **Flash** - Indicate that LoRa1 Packet receiving and sending                                                                                                                          |
+| **LED4 (LTE)**                  | • Slow Flash 1 (200ms Bright/1800ms Dark) 
+ • Unregistered network (in search) 
+ • Slow Flash 2 (200ms Dark/1800ms Bright) 
+ • Idle status (online) 
+ • Flash - Data Transmitting and Receiving 
+ • ON - Voice is working                       |
+| **LED5 (LoRa2 for 16 channel)** | • **ON** - LoRa2 is working 
+ • **OFF** - LoRa2 is not working 
+ • **Flash** - Indicate that LoRa2 Packet receiving and sending                                                                                                                          |
+| **LED6 (WLAN)**                 | **AP Mode** 
+ • **ON** - WLAN is working 
+ • **Flash** - Data Transmitting and Receiving  
+  **STA Mode** 
+ • **Slow Flash (1Hz)** - Connection Disconnected 
+ • **ON** - Connection Successful 
+ • **Flash** - Data Receiving and Sending |
+
+#### Main Specifications
+
+| Feature               | Specifications                                                                                                                                                                                                                                                                   |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Computing             | MT7628, DDR2RAM 128MB                                                                                                                                                                                                                                                            |
+| Wi-Fi Feature         | • **Frequency**: 2.400-2.4835GHz(802.11b/g/n) 
+ • **RX Sensitivity**: -95dBm (Min) 
+ • **TX Power**: 20dBm (Max) 
+ • **Operation Channels**: 2.4GHz: 1-13                                                                                                               |
+| LoRa Feature          | 
+ • **Card**: SX1301 Mini PCIe Card (connects maximum of two) 
+ • **Channels**: 8 Channels (Optional: 16 channels) 
+ • **RX Sensitivity**: -139dBm (Min) 
+ • **TX Power**: 27dBm (Max) 
+ • **Frequency**: EU433, CN470, EU868, US915 , AS923, AU915, KR920, IN865 |
+| Cellular Feature      | • Supports Quectel EG95-E / EG95-NA(IoT/M2M-optimized LTE Cat 4 Module) 
+ • EG95 -E for EMEA Region：
+ • LTE FDD: B1/B3/B7/B8/B20/B28A 
+ • WCDMA: B1/B8 
+ • GSM/EDGE: B3/B8 EG95 -NA for North America Region
+ • LTE FDD: B2/B4/B5/B12/B13 
+ • WCDMA: B2/B4/B5 |
+| Power Supply          | PoE(IEEE 802.3af/at-Compliant) - 42~57VDC; Power Jack - 12V DC                                                                                                                                                                                                                   |
+| Power Consumption     | 12W (Typical)                                                                                                                                                                                                                                                                    |
+| ETH                   | RJ45 (10/100Mbps)                                                                                                                                                                                                                                                                |
+| Antenna               | 5 N-Type Connectors                                                                                                                                                                                                                                                              |
+| Ingress Protection    | IP67                                                                                                                                                                                                                                                                             |
+| Enclosure Material    | Aluminum                                                                                                                                                                                                                                                                         |
+| Weight                | Approximately 111.11oz (3.15kg)                                                                                                                                                                                                                                                  |
+| Dimension             | 220mm x 220mm x 104mm                                                                                                                                                                                                                                                            |
+| Operating Temperature | -30˚C to +55 ˚C                                                                                                                                                                                                                                                                  |
+| Storage Temperature   | -40˚C to +85 ˚C                                                                                                                                                                                                                                                                  |
+| Operating Humidity    | 0% to 95% (non-condensing)                                                                                                                                                                                                                                                       |
+| Storage Humidity      | 0% to 95% (non-condensing)                                                                                                                                                                                                                                                       |
+| Installation method   | Pole or Wall mounting                                                                                                                                                                                                                                                            |
+
+#### RF Specifications
+
+##### LoRa
+
+| Feature              | Specifications                                                 |
+| -------------------- | -------------------------------------------------------------- |
+| Operating Frequency  | • EU433, CN470, EU868, US915 
+ • AS923, AU915, KR920, IN865 |
+| Transmit Power       | 27dBm (Max)                                                    |
+| Receiver Sensitivity | -139dBm (Min)                                                  |
+
+##### Wi-Fi
+
+| Features                                                                                            | Specifications                                                                                                                                                                                                                                                       |
+| --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Wireless Standard**                                                                               | IEEE 802.11b/g/n                                                                                                                                                                                                                                                     |
+| **Operating Frequency**                                                                             | **ISM band**: 2.412~2.472(GHz)                                                                                                                                                                                                                                       |
+| **Operation Channels**                                                                              | 2.4GHz: 1-13                                                                                                                                                                                                                                                         |
+| **Transmit Power** 
+ (The max. power may be different depending on local regulations) -per chain | **802.11b** 
+ • 1Mbps : 19dBm 
+ • 11Mbps : 19dBm  
+  **802.11g** 
+ • 6Mbps : 18dBm 
+ • 54Mbps : 16dBm  
+  **802.11n (2.4G)** 
+ • MCS0 (HT20) : 18dBm 
+ • MCS7 (HT20) : 16dBm 
+ • MCS0 (HT40) : 17dBm 
+ • MCS7 (HT40) :15dBm        |
+| **Receiver Sensitivity** (Typical)                                                                  | **802.11b** 
+ • 1Mbps : -95dBm 
+ • 11Mbps : -88dBm 
+**802.11g** 
+ • 6Mbps : -90dBm 
+ • 54Mbps : -75dBm  
+  **802.11n (2.4G)** 
+ • MCS0 (HT20) : -89dBm 
+ • MCS7(HT20) : -72dBm 
+ • MCS0(HT40) : -86dBm 
+ • MCS7(HT40) : -68dBm |
+
+### Firmware
+
+RAK7249 supports software in LoRa, Network and Management. Supported features are shown in the table below.
+
+| Model                    | Firmware Version | Source                                                                                                      |
+| ------------------------ | ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| RAK7249 WisGate Edge Max | WisGateOS V1.3.9 | [Download](https://downloads.rakwireless.com/LoRa/WisGateOS/WisGateOS_Latest_Firmware.zip) |
+
+### Software
+
+#### Supported Software
+
+| LoRa                          | Network            | Management                                   |
+| ----------------------------- | ------------------ | -------------------------------------------- |
+| Supports class A, C           | WiFi AP mode       | WEB Management                               |
+| LoRa package forward          | LTE APN setup      | Supports SSH2 , NTP                          |
+| Country code setup            | Uplink backup      | Firmware update                              |
+| TX power up setup             | Supports 802.1q    | Supports configure the LoRa Packet Forwarder |
+| Datalogger                    | DHCP Server/Client | Supports Build-in LoRa Server                |
+| Statistic                     | Router module NAT  | Supports OpenVPN, Ping Watch Dog             |
+| Location setup                | Firewall           | Supports MQTT Bridge                         |
+| Server address and port setup |                    |                                              |
+
+## Models / Bundles
+
+The table below shows the main board configurations of the Macro outdoor.
+
+|  Part Number   | 8 Channel SX1301 | 16 Channel SX1301 | Cat4 Cellular | GPS | WiFi | Battery Backup |
+| :------------: | :--------------: | :---------------: | :-----------: | :-: | :--: | :------------: |
+| RAK7249-0x-14x |        √         |                   |       √       |  √  |  √   |                |
+| RAK7249-1x-14x |                  |         √         |       √       |  √  |  √   |                |
+| RAK7249-2x-14x |        √         |                   |       √       |  √  |  √   |       √        |
+| RAK7249-3x-14x |                  |         √         |       √       |  √  |  √   |       √        |
+|   RAK7249-0x   |        √         |                   |               |  √  |  √   |                |
+|   RAK7249-1x   |                  |         √         |               |  √  |  √   |                |
+|   RAK7249-2x   |        √         |                   |               |  √  |  √   |       √        |
+|   RAK7249-3x   |                  |         √         |               |  √  |  √   |       √        |
+
+<!-- ## Certification -->

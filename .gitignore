@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / C files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.env
+
+# Log files
+feedback.log
+automated_evaluation_log.txt
+
+# IDE / OS specific
+.vscode/
+.idea/
+.DS_Store
+
+#DB
+new_rak_category_dbs/

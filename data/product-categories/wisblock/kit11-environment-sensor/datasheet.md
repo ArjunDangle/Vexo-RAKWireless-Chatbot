@@ -1,0 +1,108 @@
+---
+slug: /product-categories/wisblock/kit11-environment-sensor/datasheet/
+title: WisBlock Environment Sensor Kit Datasheet
+description: Contains a list of the modules and sensors included in this fully customizable WisBlock IoT Kit for monitoring IoT applications for various environment conditions.
+image: "https://images.docs.rakwireless.com/wisblock/kits/11_environment_kit_1.png"
+keywords:
+    - WisBlock Environment Sensor Kit
+    - wisblock
+    - datasheet
+sidebar_label: Datasheet
+---
+
+# WisBlock Environment Sensor Kit Datasheet
+
+## Overview
+
+### Description
+
+The **WisBlock Environment Sensor Kit** is a comprehensive IoT kit that includes sensors for monitoring various environmental conditions. It features sensors for temperature, humidity, pressure, UV, CO2, Particulate Matter, VOC, and IAQ. Additionally, it supports different connectivity options like LoRaWAN, BLE, LTE-M, and NB-IoT.
+
+With its wide range of environmental sensors, the WisBlock Environment Sensor Kit can be utilized in various applications. It can be used in agriculture to monitor temperature, humidity, air quality, and light levels in greenhouses. It can also be used in smart buildings to monitor indoor air quality and adjust ventilation systems accordingly. In addition, it can be used to monitor the weather at meteorological stations and pollution in urban areas. 
+
+With its flexible connectivity options, this kit can be easily integrated into existing IoT platforms, making it an ideal solution for a wide range of industries and use cases.
+
+### Features
+
+- Compatible with Arduino IDE
+- USB C interface for data, power and battery charging
+- Supports Li-Ion battery with built-in solar charging capability
+- Multiple communication protocols: LoRaWAN, BLE, LTE-M (optional) and NB-IoT (optional)
+- Included modules:
+    - Two WisBlock Core modules - [RAK4631 LPWAN Module](https://store.rakwireless.com/products/rak4631-lpwan-node)
+    - One standard [RAK19007 WisBlock Base Board](https://store.rakwireless.com/products/rak19007-wisblock-base-board-2nd-gen) with 4 sensor slots and 1 IO slot
+    - One [RAK19001 Dual IO WisBlock Base Board](https://store.rakwireless.com/products/rak19001-wisblock-dual-io-base-board)  with 6 sensor slots and 2 IO slots
+    - [RAK1901 Temperature and Humidity Sensor](https://store.rakwireless.com/products/rak1901-shtc3-temperature-humidity-sensor)
+    - [RAK1902 Barometric Pressure Sensor](https://store.rakwireless.com/products/rak1902-kps22hb-barometric-pressure-sensor)
+    - [RAK1903 Ambient Light Sensor](https://store.rakwireless.com/products/rak1903-opt3001dnpr-ambient-light-sensor)
+    - [RAK1906 IAQ (Indoor Air Quality) Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor)
+    - [RAK12010 Ambient Light Sensor](https://store.rakwireless.com/products/wisblock-ambient-light-sensor-rak12010)
+    - [RAK12011 Barometer WT Sensor](https://store.rakwireless.com/products/wisblock-barometer-wt-sensor-rak12011)
+    - [RAK12019 UV Light Sensor](https://store.rakwireless.com/products/rak12019-wisblock-uv-sensor)
+    - [RAK12037 CO2 Sensor](https://store.rakwireless.com/products/co2-sensor-sensirion-scd30-rak12037)
+    - [RAK12039 Particle Matter Sensor](https://store.rakwireless.com/products/particle-matter-sensor-plantower-pmsa003i-rak12039)
+    - [RAK12047 VOC Sensor](https://store.rakwireless.com/products/rak12047-voc-sensor-sensirion-sgp40)
+    - LoRaWAN supported bands: RU864, IN865, EU868, AU915, US915, KR920, and AS923
+    - (Optional) Cellular variant dependent on a country: two (2) [RAK5860](https://store.rakwireless.com/products/rak5860-lte-nb-iot-extension-board) with 5G LTE NB-IoT capability and two (2) [RAK13101](https://store.rakwireless.com/products/wisblock-gsm-module-rak13101) with GSM/GPRS capability
+- GPS built-in on Cellular modules
+
+## Specifications
+
+### Overview
+
+The WisBlock Environment Sensor Kit includes the following modules:
+
+> **Image:** Modules of the WisBlock Environment Sensor Kit
+
+### Hardware
+
+#### WisBlock Base and Core
+
+WisBlock Kits require both a WisBlock Base and a WisBlock Core to be functional for any IoT application. The sensor and IO modules included in the kit will not operate without these components.
+
+The following table displays the WisBlock Base and Core components included in the kit.
+
+| RAK Model                                                                    | Function      | Feature                                                               |
+| ---------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------- |
+| [RAK19001](https://docs.rakwireless.com/product-categories/wisblock/rak19001) | WisBlock Base | USB-C, 6 sensor slot, 2 IO slot, battery/solar connector              |
+| [RAK19007](https://docs.rakwireless.com/product-categories/wisblock/rak19007) | WisBlock Base | USB-C, 4 sensor slot, 1 IO slot, battery/solar connector              |
+| [RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631)   | WisBlock Core | Based on nrf52840 (BLE) and SX1262 (LoRa), IPEX connector for antenna |
+
+:::tip NOTE
+The RAK4631 is compatible with the Arduino IDE. You can add the module to the board manager by following the instructions in the [Installation Guide in the Learn section](https://learn.rakwireless.com/hc/en-us/articles/26687371039383-How-To-Perform-Installation-of-Board-Support-Package-in-Arduino-IDE) or by visiting the [RAK Arduino BSP GitHub Repo](https://github.com/RAKWireless/RAKwireless-Arduino-BSP-Index).
+:::
+
+#### WisBlock Modules
+
+The following table lists the modules included in the kit, detailing the chips used inside each of them.
+
+:::tip NOTE
+Check the specific requirements and limitations for each module, including necessary batteries and configurations.
+:::
+
+| RAK Model                                                                    | Function                    | Chip         | Manufacturer          |
+| ---------------------------------------------------------------------------- | --------------------------- | ------------ | --------------------- |
+| [RAK1901](https://docs.rakwireless.com/product-categories/wisblock/rak1901)   | Temperature Humidity Sensor | SHTC3        | Sensirion             |
+| [RAK1902](https://docs.rakwireless.com/product-categories/wisblock/rak1902)   | Barometric Pressure         | LPS22HB      | STMicroelectronics    |
+| [RAK1903](https://docs.rakwireless.com/product-categories/wisblock/rak1903)   | Ambient Light Sensor        | OPT3001DNPR  | Texas Instruments     |
+| [RAK1906](https://docs.rakwireless.com/product-categories/wisblock/rak1906)   | Environmental Sensor        | BME680       | BOSCH                 |
+| [RAK12010](https://docs.rakwireless.com/product-categories/wisblock/rak12010) | Ambient Light Sensor        | VEML7700     | Vishay Semiconductors |
+| [RAK12011](https://docs.rakwireless.com/product-categories/wisblock/rak12011) | Barometric Pressure         | LPS33HW      | STMicroelectronics    |
+| [RAK12019](https://docs.rakwireless.com/product-categories/wisblock/rak12019) | UV Sensor                   | LTR-390UV-01 | Lite-On               |
+| [RAK12037](https://docs.rakwireless.com/product-categories/wisblock/rak12037) | CO2 sensor                  | SCD30        | Sensirion             |
+| [RAK12039](https://docs.rakwireless.com/product-categories/wisblock/rak12039) | Particle matter sensor      | PMSA003I     | Plantower             |
+| [RAK12047](https://docs.rakwireless.com/product-categories/wisblock/rak12047) | VOC Sensor                  | SGP40        | Sensirion             |
+
+#### WisBlock Cellular Modules
+
+The cellular modules support various cellular protocols, as detailed in the following table.
+
+| RAK Model                                                                    | Supported Protocol | Chip   | Manufacturer |
+| ---------------------------------------------------------------------------- | ------------------ | ------ | ------------ |
+| [RAK13101](https://docs.rakwireless.com/product-categories/wisblock/rak13101) | GSM/GPRS           | MC20CE | Quectel      |
+| [RAK5860](https://docs.rakwireless.com/product-categories/wisblock/rak5860)   | LTE-M/NB-IoT       | BG77   | Quectel      |
+
+#### Interconnections
+
+The **WisBlock Environment Sensor Kit** is designed to get you started on your IoT projects. Before connecting various modules, you must first check for any potential conflicts. To determine whether there are conflicts, you can use the [WisBlock Pin Mapper tool](https://learn.rakwireless.com/hc/en-us/articles/26743306645143-How-To-Use-the-WisBlock-IO-Pin-Mapping-Tool).
+
