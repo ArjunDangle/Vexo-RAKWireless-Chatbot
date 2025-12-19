@@ -42,6 +42,7 @@ jsonschema-specifications==2025.9.1
 kubernetes==34.1.0
 langchain-core==1.2.2
 langchain-openai==1.1.5
+langchain-text-splitters==1.1.0
 langsmith==0.5.0
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
@@ -76,6 +77,7 @@ pyproject_hooks==1.2.0
 pyreadline3==3.5.4
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
+python-frontmatter==1.1.0
 PyYAML==6.0.3
 rank-bm25==0.2.2
 referencing==0.37.0
