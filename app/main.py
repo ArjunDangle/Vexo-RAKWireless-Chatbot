@@ -27,7 +27,8 @@ def root():
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     try:
-        response_data = chat_engine.get_response(request.query)
+        # UPDATE THIS LINE: Pass request.history
+        response_data = chat_engine.get_response(request.query, request.history)
         return ChatResponse(**response_data)
     except Exception as e:
         print(f"Error: {e}")
