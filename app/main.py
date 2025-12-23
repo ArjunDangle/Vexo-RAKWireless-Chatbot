@@ -1,63 +1,76 @@
+import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+# Import our refined schemas
 from app.models.chat import ChatRequest, ChatResponse
-from chat import RAKChatEngine  # Ensure chat.py is in your root or PYTHONPATH
-import logging
+# Import our unified "Brain"
+from app.services.chat_engine import ChatEngine
+from app.core.config import settings
 
 # --- INITIALIZATION ---
-app = FastAPI(title="RAKwireless Knowledge Engine")
+app = FastAPI(title="RAKwireless Knowledge Engine", version="1.0.0")
 
-# Setup Logging
+# Setup Logging for production visibility
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Enable CORS for your frontend (React/Vue/etc.)
+# Enable CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Adjust this in production
+    allow_origins=settings.ALLOWED_ORIGINS, 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize the Elite Engine once on startup
+# Initialize the Unified Engine once on startup to save latency
 try:
-    bot = RAKChatEngine()
-    logger.info("✅ Elite RAKChatEngine initialized successfully.")
+    bot = ChatEngine()
+    logger.info("✅ Unified RAK ChatEngine initialized successfully.")
 except Exception as e:
-    logger.error(f"❌ Failed to initialize RAKChatEngine: {e}")
+    logger.error(f"❌ Failed to initialize ChatEngine: {e}")
     bot = None
 
 # --- ROUTES ---
 
 @app.get("/")
-def read_root():
-    return {"status": "online", "engine": "RAK Elite v1.0"}
+async def health_check():
+    """Returns the status of the API and the engine."""
+    return {
+        "status": "online", 
+        "engine": "RAK Unified v1.0",
+        "ready": bot is not None
+    }
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
+    """
+    Unified endpoint for processing technical queries.
+    Uses Query Rewriting, HyDE, Hybrid Search, and Reranking.
+    """
     if not bot:
+        logger.error("Attempted to call /chat but engine is not initialized.")
         raise HTTPException(status_code=500, detail="Chat Engine not initialized.")
     
     try:
-        logger.info(f"Processing query: {request.message}")
+        logger.info(f"Incoming query: {request.message}")
         
-        # This calls the method we built in Phase 3, 4, and 5
-        # It handles HyDE, Context Swapping, and Citations internally
-        answer_with_citations = bot.ask(request.message)
-        
-        # Extract sources from the engine logic to return as a clean list
-        _, sources = bot.retrieve_context(request.message)
+        # Process the query using the unified service
+        # History is passed for contextual query rewriting
+        result = bot.get_response(request.message, history=request.history)
         
         return ChatResponse(
-            answer=answer_with_citations,
-            sources=sources
+            answer=result['answer'],
+            sources=result['sources'],
+            latency=result['latency']
         )
         
     except Exception as e:
-        logger.error(f"Error during chat: {e}")
+        logger.error(f"Error during chat processing: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
+    # Host on 0.0.0.0 to allow containerization or external access
     uvicorn.run(app, host="0.0.0.0", port=8000)

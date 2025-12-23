@@ -35,7 +35,7 @@ def chat_session():
             # Send Request to API
             try:
                 start_ts = time.time()
-                response = requests.post(API_URL, json={"query": user_query})
+                response = requests.post(API_URL, json={"message": user_query}) # Use 'message', not 'query'
                 response.raise_for_status()
                 data = response.json()
                 

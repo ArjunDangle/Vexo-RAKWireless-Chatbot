@@ -1,30 +1,34 @@
+import torch
 from sentence_transformers import SentenceTransformer
+from typing import List, Union
+import numpy as np
 
 class EmbeddingModel:
     _instance = None
-    _model = None
+
+    def __init__(self, model_name: str = 'multi-qa-mpnet-base-dot-v1'):
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.model = SentenceTransformer(model_name, device=self.device)
+        print(f"✅ Embedding Model Loaded: {model_name} on {self.device}")
 
     @classmethod
     def get_instance(cls):
         if cls._instance is None:
-            print("🧠 Loading Embedding Model (BAAI/bge-base-en-v1.5)...")
             cls._instance = cls()
-            # This model is ~400MB and much smarter than MiniLM
-            cls._model = SentenceTransformer('BAAI/bge-base-en-v1.5')
-            print("✅ Model Loaded.")
         return cls._instance
 
-    def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        """
-        Embeds documents (knowledge chunks).
-        BGE does NOT need an instruction prefix for documents, only for queries.
-        """
-        return self._model.encode(texts, convert_to_numpy=True).tolist()
+    # --- LANGCHAIN INTERFACE METHODS ---
 
-    def embed_query(self, text: str) -> list[float]:
-        """
-        Embeds the user query.
-        CRITICAL: BGE models require this specific instruction for retrieval queries.
-        """
-        instruction = "Represent this sentence for searching relevant passages: "
-        return self._model.encode([instruction + text], convert_to_numpy=True)[0].tolist()
+    def embed_query(self, text: str) -> List[float]:
+        """Embeds a single query string for retrieval."""
+        embedding = self.model.encode(text, convert_to_numpy=True)
+        return embedding.tolist()
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """Embeds a list of strings for indexing."""
+        embeddings = self.model.encode(texts, convert_to_numpy=True)
+        return embeddings.tolist()
+
+    # --- YOUR ORIGINAL METHOD (Keep for ingest.py) ---
+    def encode(self, text: Union[str, List[str]]) -> np.ndarray:
+        return self.model.encode(text, convert_to_numpy=True)

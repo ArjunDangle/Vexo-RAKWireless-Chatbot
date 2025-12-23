@@ -20,3 +20,6 @@ automated_evaluation_log.txt
 
 #DB
 new_rak_category_dbs/
+
+# Database
+storage/vector_db/
