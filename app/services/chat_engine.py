@@ -1,4 +1,5 @@
 import time
+import json  # <--- Added missing import
 import asyncio
 import chromadb
 import numpy as np
@@ -22,10 +23,10 @@ class ChatEngine:
         self.collection = self.client.get_collection(name=settings.COLLECTION_NAME)
         self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
         
+        # 2. Setup LLM (Standard OpenAI)
         self.llm = ChatOpenAI(
             model=settings.MODEL_NAME,
-            openai_api_key=settings.OPENROUTER_API_KEY,
-            openai_api_base=settings.OPENROUTER_BASE_URL,
+            openai_api_key=settings.OPENAI_API_KEY,
             temperature=0.1,
             streaming=True 
         )

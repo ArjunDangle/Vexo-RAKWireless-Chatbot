@@ -22,9 +22,13 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     
     # AI Config
-    OPENROUTER_API_KEY: str
-    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-    MODEL_NAME: str = "mistralai/devstral-2512:free"
+    OPENAI_API_KEY: str
+    # Removed OPENROUTER_BASE_URL as we are now using the default OpenAI endpoint
+    MODEL_NAME: str = "gpt-4.1-nano-2025-04-14"
+    
+    # OPENROUTER_API_KEY: str
+    # OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
+    # MODEL_NAME: str = "mistralai/devstral-2512:free"
     
     # Vector DB Config
     DB_PATH: str = str(BASE_DIR / "storage" / "vector_db")
