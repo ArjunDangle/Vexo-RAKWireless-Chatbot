@@ -1,76 +1,90 @@
 import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+from typing import List, Optional
 
-# Import our refined schemas
-from app.models.chat import ChatRequest, ChatResponse
-# Import our unified "Brain"
 from app.services.chat_engine import ChatEngine
 from app.core.config import settings
 
-# --- INITIALIZATION ---
-app = FastAPI(title="RAKwireless Knowledge Engine", version="1.0.0")
-
-# Setup Logging for production visibility
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Enable CORS for frontend integration
+app = FastAPI(title="RAKwireless Knowledge Engine API")
+
+# Enable CORS for your React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS, 
+    allow_origins=["*"],  # Adjust this to your frontend URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize the Unified Engine once on startup to save latency
-try:
-    bot = ChatEngine()
-    logger.info("✅ Unified RAK ChatEngine initialized successfully.")
-except Exception as e:
-    logger.error(f"❌ Failed to initialize ChatEngine: {e}")
-    bot = None
+# Initialize Chat Engine
+bot = None
+
+@app.on_event("startup")
+async def startup_event():
+    global bot
+    try:
+        bot = ChatEngine()
+        logger.info("✅ Chat Engine initialized successfully")
+    except Exception as e:
+        logger.error(f"❌ Failed to initialize Chat Engine: {e}")
+
+# --- SCHEMAS ---
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    message: str
+    history: Optional[List[dict]] = []
 
 # --- ROUTES ---
 
-@app.get("/")
+@app.get("/health")
 async def health_check():
-    """Returns the status of the API and the engine."""
-    return {
-        "status": "online", 
-        "engine": "RAK Unified v1.0",
-        "ready": bot is not None
-    }
+    return {"status": "healthy", "engine_loaded": bot is not None}
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     """
-    Unified endpoint for processing technical queries.
-    Uses Query Rewriting, HyDE, Hybrid Search, and Reranking.
+    Streaming Chat Endpoint.
+    Instead of waiting 100s, this sends chunks of text as they are ready.
     """
     if not bot:
-        logger.error("Attempted to call /chat but engine is not initialized.")
-        raise HTTPException(status_code=500, detail="Chat Engine not initialized.")
-    
+        raise HTTPException(status_code=500, detail="Chat engine not initialized")
+
     try:
-        logger.info(f"Incoming query: {request.message}")
-        
-        # Process the query using the unified service
-        # History is passed for contextual query rewriting
-        result = bot.get_response(request.message, history=request.history)
-        
-        return ChatResponse(
-            answer=result['answer'],
-            sources=result['sources'],
-            latency=result['latency']
+        # We return a StreamingResponse which executes the generator in chat_engine
+        return StreamingResponse(
+            bot.get_response_stream(request.message, request.history),
+            media_type="text/event-stream"
         )
-        
     except Exception as e:
         logger.error(f"Error during chat processing: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/chat/static")
+async def chat_static_endpoint(request: ChatRequest):
+    """
+    Standard non-streaming endpoint if you prefer traditional JSON.
+    """
+    if not bot:
+        raise HTTPException(status_code=500, detail="Chat engine not initialized")
+    
+    try:
+        response = await bot.get_response(request.message, request.history)
+        return response
+    except Exception as e:
+        logger.error(f"Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
-    # Host on 0.0.0.0 to allow containerization or external access
     uvicorn.run(app, host="0.0.0.0", port=8000)

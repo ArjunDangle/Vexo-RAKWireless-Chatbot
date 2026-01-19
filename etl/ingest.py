@@ -21,7 +21,7 @@ DB_DIR = os.path.join(project_root, "storage", "vector_db")
 COLLECTION_NAME = "rak_knowledge"
 
 def flatten_metadata(metadata: dict) -> dict:
-    """Your utility to ensure all metadata values are ChromaDB compatible."""
+    """Ensures all metadata values are ChromaDB compatible strings."""
     clean_meta = {}
     for k, v in metadata.items():
         if isinstance(v, list): 
@@ -36,17 +36,20 @@ def ingest_data():
     print(f"📡 Connecting to Vector DB at: {DB_DIR}")
     client = chromadb.PersistentClient(path=DB_DIR)
     
+    # 1. Clear old data to reset dimensions
     try:
         client.delete_collection(name=COLLECTION_NAME)
         print(f"🗑️ Deleted old collection to reset dimensions.")
     except:
-        pass # Collection didn't exist yet
+        pass 
     
-    # Using get_or_create so we don't crash if it already exists
-    collection = client.get_or_create_collection(name=COLLECTION_NAME)
+    # 2. Initialize our custom embedder
     embedder = EmbeddingModel.get_instance()
+    
+    # 3. Create collection
+    collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
-    # RGLOB: Your recursive search for product folders
+    # RGLOB: Recursive search for product folders
     files = list(Path(INPUT_DIR).rglob("*.jsonl"))
     
     if not files:
@@ -64,7 +67,6 @@ def ingest_data():
                 try:
                     data = json.loads(line)
                     
-                    # Essential validation to prevent silent skips
                     doc_id = data.get('id')
                     if not doc_id:
                         continue
@@ -75,14 +77,13 @@ def ingest_data():
                     ids.append(str(doc_id))
                     documents.append(text_to_embed)
                     
-                    # Your metadata improvements + the link for 'Context Swapping'
+                    # Metadata for Context Swapping and Filtering
                     meta = {
                         "product_id": data.get('product_id', 'unknown'),
                         "product_family": data.get('product_family', 'unknown'),
                         "category": data['category'],
                         "title": data['title'],
                         "source": data.get('source_file', 'unknown'),
-                        # CRITICAL: Ensures ChatEngine has the full text to swap to
                         "parent_content": data.get('parent_content') or data.get('content', '')
                     }
                     metadatas.append(flatten_metadata(meta))
@@ -91,8 +92,21 @@ def ingest_data():
                     continue
 
         if documents:
-            # Your use of upsert is best practice for re-running the script
-            collection.upsert(ids=ids, documents=documents, metadatas=metadatas)
+            # --- THE FIX ---
+            # Explicitly generate embeddings using your multi-qa-mpnet-base-dot-v1 model (768-dim)
+            # If we don't pass 'embeddings', Chroma defaults to a 384-dim model internally.
+            print(f"🧠 Generating embeddings for {len(documents)} chunks...")
+            embeddings = embedder.embed_documents(documents)
+            
+            # Upsert both the raw text AND the pre-computed 768-dim vectors
+            collection.upsert(
+                ids=ids, 
+                embeddings=embeddings, 
+                documents=documents, 
+                metadatas=metadatas
+            )
+            # ----------------
+            
             total_chunks += len(documents)
             print(f"✅ Indexed {len(documents)} snippets from {file_path.parent.name}/{file_path.name}")
 
